@@ -1,0 +1,4 @@
+- name: Petco
+  latitude:  !secret petco_lat
+  longitude: !secret petco_lon
+  icon: mdi:dog-side

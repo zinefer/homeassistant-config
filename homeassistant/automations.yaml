@@ -1,0 +1,15 @@
+- id: auto-unlock
+  alias: Auto Unlock
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.james_phone
+    from: 'off'
+    to: 'on'
+  action:
+  - service: lock.unlock
+    entity_id: lock.frontdoor
+
+
+
+
+    

@@ -1,0 +1,13 @@
+'1585189205228':
+  alias: Show Lovelace
+  sequence:
+  - data:
+      entity_id: media_player.kitchen_display
+      view_path: default_view
+    service: cast.show_lovelace_view
+'1585195573304':
+  alias: Stop Casting
+  sequence:
+  - data: {}
+    entity_id: media_player.big_bedroom
+    service: media_player.turn_off
