@@ -2,7 +2,7 @@
   alias: Auto Unlock
   trigger:
   - platform: state
-    entity_id: binary_sensor.james_phone
+    entity_id: binary_sensor.walkway_james_phone_presence
     from: 'off'
     to: 'on'
   action:
