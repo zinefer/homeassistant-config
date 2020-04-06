@@ -18,9 +18,10 @@ tts:
 zwave:
   usb_path: /dev/ttyUSB0
   network_key: !secret zwave_network_key
-  #device_config: !include zwave_device_config.yaml
 
-group: !include groups.yaml
+zha:
+  usb_path: /dev/ttyUSB1
+  database_path: /config/zigbee.db
 
 roku:
   - host: 192.168.47.134
