@@ -1,0 +1,37 @@
+esphome:
+  name: walkway
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid:     !secret wifi_ssid
+  password: !secret wifi_pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid:     walkway
+    password: !secret fallback_pass
+
+captive_portal:
+
+# Enable logging
+logger:
+  #level: VERY_VERBOSE
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+esp32_ble_tracker:
+  scan_parameters:
+    duration: 60s
+
+binary_sensor:
+  - platform:     ble_presence
+    name:         walkway_jphone_presence
+    service_uuid: !secret jphone_uuid
+  
+  - platform:     ble_presence
+    name:         walkway_bphone_presence
+    service_uuid: !secret bphone_uuid

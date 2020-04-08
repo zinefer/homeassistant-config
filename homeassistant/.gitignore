@@ -8,6 +8,9 @@
 !.gitignore
 !*.md
 
+# Include folders.
+!esphome
+
 # Ignore folders.
 .storage
 .cloud

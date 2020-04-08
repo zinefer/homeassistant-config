@@ -27,7 +27,7 @@ roku:
   - host: 192.168.47.134
 
 automation: !include automations.yaml
-script: !include scripts.yaml
-group: !include groups.yaml
-scene: !include scenes.yaml
-zone: !include zones.yaml
+script:     !include scripts.yaml
+group:      !include groups.yaml
+scene:      !include scenes.yaml
+zone:       !include zones.yaml
