@@ -11,3 +11,56 @@
   - data: {}
     entity_id: media_player.big_bedroom
     service: media_player.turn_off
+'1594424883910':
+  alias: Set Lock Code
+  sequence:
+  - data:
+      code_slot: '8'
+      node_id: '6'
+      usercode: '141914'
+    service: lock.set_usercode
+  mode: single
+'1600992174270':
+  alias: 3080 Alert
+  sequence:
+  - service: notify.mobile_app_sm_g950u
+    data:
+      message: 3080!
+      data:
+        channel: alarm
+  mode: single
+announce:
+  alias: Announce
+  sequence:
+  - service: tts.google_translate_say
+    data:
+      entity_id: media_player.announcements
+      message: its dark and cold
+  mode: single
+turn_off_printer:
+  alias: Turn Off Printer
+  mode: single
+  sequence:
+  - condition: state
+    entity_id: sensor.prusamk3s_current_state
+    state: Operational
+  - data: {}
+    entity_id: light.3d_printer
+    service: light.turn_off
+turn_off_printer_after_x_time:
+  alias: Turn Off Printer after X time
+  mode: single
+  sequence:
+  - delay: 03:00
+  - data: {}
+    entity_id: light.3d_printer
+    service: light.turn_off
+reload:
+  alias: Reload
+  sequence:
+  - data: {}
+    service: automation.reload
+  - data: {}
+    service: homeassistant.reload_core_config
+  - data: {}
+    service: group.reload

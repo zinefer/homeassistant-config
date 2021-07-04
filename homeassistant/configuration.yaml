@@ -20,14 +20,43 @@ zwave:
   network_key: !secret zwave_network_key
 
 zha:
-  usb_path: /dev/ttyUSB1
   database_path: /config/zigbee.db
 
-roku:
-  - host: 192.168.47.134
-media_extractor:
+octoprint:
+  - host: !secret octoprint_host
+    api_key: !secret octoprint_key
+    name: PrusaMK3s
+    bed: true
+    number_of_tools: 1
+    sensors:
+      monitored_conditions:
+        - Current State
+        - Temperatures
 
 automation: !include automations.yaml
+
+light:
+  - platform: template
+    lights:
+      house_lights:
+        friendly_name: House Lights
+        turn_on:
+          service: light.turn_on
+          entity_id:
+            - light.jasco_products_45857_b01a2100_level_on_off
+            - light.ledvance_br30_rgbw_276b0600_level_light_color_on_off
+            - light.ledvance_br30_rgbw_b7620600_level_light_color_on_off
+            - light.nook_light_level_light_color_on_off
+        turn_off:
+          service: light.turn_off
+          entity_id:
+            - light.jasco_products_45857_b01a2100_level_on_off
+            - light.ledvance_br30_rgbw_276b0600_level_light_color_on_off
+            - light.ledvance_br30_rgbw_b7620600_level_light_color_on_off
+            - light.nook_light_level_light_color_on_off
+
+# automation: !include automations.yaml
+automation: !include_dir_merge_list automations/
 script:     !include scripts.yaml
 group:      !include groups.yaml
 scene:      !include scenes.yaml
