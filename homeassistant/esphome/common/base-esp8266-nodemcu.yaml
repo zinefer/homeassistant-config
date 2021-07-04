@@ -1,0 +1,25 @@
+esphome:
+  name: ${id}
+  platform: ESP8266
+  board: nodemcuv2
+  build_path: ./build/${id}
+
+wifi:
+  ssid:     !secret wifi_ssid
+  password: !secret wifi_pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid:     ${id}
+    password: !secret fallback_pass
+
+captive_portal:
+
+# Enable logging
+logger:
+  #level: VERY_VERBOSE
+
+# Enable Home Assistant API
+api:
+
+ota:

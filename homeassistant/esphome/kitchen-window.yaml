@@ -1,0 +1,13 @@
+substitutions:
+  id: kitchen-window
+  name: Kitchen Window
+
+packages:
+  gadget: !include gadget/window-controller.yaml
+
+
+
+
+
+
+

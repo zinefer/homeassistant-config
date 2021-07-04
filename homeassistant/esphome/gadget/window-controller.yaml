@@ -1,0 +1,68 @@
+packages:
+  base: !include ../common/base-esp8266-nodemcu.yaml
+
+i2c:
+  sda: D2
+  scl: D3
+
+sensor:
+  - platform: htu21d
+    temperature:
+      name: ${name} Temperature
+    humidity:
+      name: ${name} Humidity
+    update_interval: 60s
+
+switch:
+  - platform: gpio
+    id: actuator_close
+    pin: D0
+  - platform: gpio
+    id: actuator_open
+    pin: D1
+
+cover:
+  - platform: template
+    name: ${name}
+    id: window
+    optimistic: true
+    open_action:
+      - switch.turn_off: actuator_close
+      - switch.turn_on: actuator_open
+      - delay: 360s
+      - switch.turn_off: actuator_open
+    close_action:
+      - switch.turn_off: actuator_open
+      - switch.turn_on: actuator_close
+      - delay: 360s
+      - switch.turn_off: actuator_close
+    stop_action:
+      - switch.turn_off: actuator_open
+      - switch.turn_off: actuator_close
+
+binary_sensor:
+  - platform: gpio
+    pin: D4
+    name: Window Control Button
+    filters:
+      invert:
+    on_press: 
+      then:
+        - lambda: |
+            if (id(window).position == cover::COVER_OPEN) {
+              if (id(actuator_open).state){
+                // window is opening
+                id(window).stop();
+              } else {
+                // window is open and not moving
+                id(window).close();
+              }
+            } else {
+              if (id(actuator_close).state){
+                // window is closing
+                id(window).stop();
+              } else {
+                // win is closed and not moving
+                id(window).open();
+              }
+            }
