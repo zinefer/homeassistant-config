@@ -1,0 +1,16 @@
+- id: speaker-monitor
+  alias: Speaker Monitor
+  trigger:
+  - platform: state
+    entity_id: media_player.portal_to_hell
+    to: unavailable
+  - platform: state
+    entity_id: media_player.portal_to_hell
+    to: standby
+  condition:
+    condition: state
+    entity_id: switch.speakers_on_off
+    state: 'on'
+  action:
+    service: switch.turn_off
+    entity_id: switch.speakers_on_off

@@ -1,0 +1,20 @@
+substitutions:
+  id: garage
+  name: garage
+
+packages:
+  base: !include common/base-esp8266-nodemcu.yaml
+
+i2c:
+
+sensor:
+  - platform: htu21d
+    temperature:
+      name: ${name} Temperature
+    humidity:
+      name: ${name} Humidity
+    update_interval: 60s
+
+  - platform: tsl2561
+    name: ${name} Ambient Light
+    update_interval: 60s

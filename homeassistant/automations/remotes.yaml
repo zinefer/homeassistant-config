@@ -1,0 +1,16 @@
+- id: desk-remote
+  alias: Desk Remote
+  description: ''
+  use_blueprint:
+    path: wormie_dk/zha-ikea-five-button-remote.yaml
+    input:
+      remote: 7cf8be0aff13b04ae13e9b516d6e927e
+      button_on_off:
+      - service: switch.toggle
+        entity_id: switch.speakers_on_off
+      button_brightness_up_short:
+      - service: light.toggle
+        entity_id:
+        - light.house_lights
+      button_brightness_down_short:
+      - service: script.play_morning_shows

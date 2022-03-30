@@ -1,0 +1,29 @@
+- id: aquarium-on
+  alias: Turn on aquarium lights
+  trigger:
+  - platform: time
+    at: '07:00:00'
+  - platform: homeassistant
+    event: start
+  condition:
+  - condition: time
+    after: '07:00:00'
+    before: '23:00:00'
+  action:
+  - service: light.turn_on
+    entity_id: light.jasco_products_45853_15671900_on_off
+
+- id: aquarium-off
+  alias: Turn off aquarium lights
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  - platform: homeassistant
+    event: start
+  condition:
+  - condition: time
+    after: '23:00:00'
+    before: '07:00:00'
+  action:
+    - service: light.turn_off
+      entity_id: light.jasco_products_45853_15671900_on_off

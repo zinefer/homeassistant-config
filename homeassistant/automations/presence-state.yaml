@@ -1,0 +1,17 @@
+# - id: resting-volume
+#   trigger:
+#   - platform: state
+#     entity_id: media_player.bed
+#     from: 'off'
+#     to: 'Playing'
+#   condition: or
+#   conditions:
+#   - condition: state
+#     entity_id: input_select.blythe_state
+#     state: Sleeping
+#   - condition: state
+#     entity_id: input_select.james_state
+#     state: Sleeping
+#   action:
+#   - service: media_player.set_volume
+#     volume_level: 0.75

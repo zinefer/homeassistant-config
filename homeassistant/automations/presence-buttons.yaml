@@ -1,0 +1,45 @@
+- id: blythe-bed-button
+  alias: Blythe Bed Button
+  description: ''
+  use_blueprint:
+    path: mcflexus/zha-ikea-tradfri-shortcut-button-debounced.yaml
+    input:
+      shortcut_button: 8da56eb5dba9c41d1e09597a5ad94fbb
+      button_short:
+      - service: script.play_bedtime_shows
+
+- id: blythe-door-button
+  alias: Blythe Door Button
+  description: ''
+  use_blueprint:
+    path: mcflexus/zha-ikea-tradfri-shortcut-button-debounced.yaml
+    input:
+      shortcut_button: 8ab91bd6032ab38cbbfa9e66eb58789f
+      button_short:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.blythe_state
+          option: '{% if is_state("input_select.blythe_state", "Away")%}Home{%else%}Away{%endif%}'
+
+- id: james-bed-button
+  alias: James Bed Button
+  description: ''
+  use_blueprint:
+    path: mcflexus/zha-ikea-tradfri-shortcut-button-debounced.yaml
+    input:
+      shortcut_button: 012c14a028048f9dd74812ac99d5f890
+      button_short:
+      - service: script.play_bedtime_shows
+
+- id: james-door-button
+  alias: James Door Button
+  description: ''
+  use_blueprint:
+    path: mcflexus/zha-ikea-tradfri-shortcut-button-debounced.yaml
+    input:
+      shortcut_button: a250c8425ddb30990dc5806863ed8f70
+      button_short:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.james_state
+          option: '{% if is_state("input_select.james_state", "Away")%}Home{%else%}Away{%endif%}'

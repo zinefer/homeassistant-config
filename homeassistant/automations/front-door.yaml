@@ -1,0 +1,10 @@
+- id: auto-unlock
+  alias: Auto Unlock
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.walkway_jphone_presence
+    from: 'off'
+    to: 'on'
+  action:
+  - service: lock.unlock
+    entity_id: lock.frontdoor

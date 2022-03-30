@@ -1,0 +1,20 @@
+- id: 3d-printer-shutdown
+  alias: 3D Printer Shutdown
+  trigger:
+    platform: state
+    entity_id: sensor.prusamk3s_current_state
+    to: Operational
+    for:
+      minutes: 60
+  condition:
+    condition: and
+    conditions:
+      - condition: numeric_state
+        entity_id: sensor.prusamk3s_actual_bed_temp
+        below: 90
+      - condition: numeric_state
+        entity_id: sensor.prusamk3s_actual_tool0_temp
+        below: 90
+  action:
+    - service: light.turn_off
+      entity_id: light.3d_printer

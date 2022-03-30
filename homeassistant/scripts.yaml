@@ -64,3 +64,43 @@ reload:
     service: homeassistant.reload_core_config
   - data: {}
     service: group.reload
+
+play_morning_shows:
+  alias: Play Morning Shows in Den
+  sequence:
+  - service: media_player.select_source
+    data:
+      entity_id: media_player.portal_to_hell
+      source: Plex - Free Movies & TV
+  - wait_template: "{{ is_state('media_player.portal_to_hell', 'on') }}"
+    timeout: '00:00:20'
+  - delay: '00:00:01'
+  - service: plex.scan_for_clients
+  - wait_template: "{{ is_state('media_player.plex_plex_for_roku_den_roku', 'idle') or is_state('media_player.plex_plex_for_roku_den_roku', 'on') }}"
+    timeout: '00:00:20'
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.plex_plex_for_roku_den_roku
+      media_content_id: >-
+        { "library_name": "TV Shows", "show_name": ["Last Week Tonight", "Rovers Morning Glory"], "episode.unwatched": true, "episode.inProgress": [true, false], "sort": ["show.titleSort","addedAt:asc"], "maxresults": 1 }
+      media_content_type: EPISODE
+
+play_bedtime_shows:
+  alias: Play Bedtime Shows in Bed
+  sequence:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.bed
+      media_content_id: >-
+        plex://{ "library_name": "TV Shows", "show_name": ["Forensic Files"], "shuffle": 1, "maxresults": 1 }
+      media_content_type: EPISODE
+  - delay: '00:00:01'
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.bed
+      volume_level: 0.46
+  - delay: '00:00:01'
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.bed
+      volume_level: 0.45

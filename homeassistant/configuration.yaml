@@ -15,25 +15,25 @@ homeassistant:
 tts:
   - platform: google_translate
 
-zwave:
-  usb_path: /dev/ttyUSB0
-  network_key: !secret zwave_network_key
+# zwave:
+#   usb_path: /dev/ttyUSB0
+#   network_key: !secret zwave_network_key
 
 zha:
   database_path: /config/zigbee.db
 
-octoprint:
-  - host: !secret octoprint_host
-    api_key: !secret octoprint_key
-    name: PrusaMK3s
-    bed: true
-    number_of_tools: 1
-    sensors:
-      monitored_conditions:
-        - Current State
-        - Temperatures
+# octoprint:
+#   - host: !secret octoprint_host
+#     api_key: !secret octoprint_key
+#     name: PrusaMK3s
+#     bed: true
+#     number_of_tools: 1
+#     sensors:
+#       monitored_conditions:
+#         - Current State
+#         - Temperatures
 
-automation: !include automations.yaml
+input_select:
 
 light:
   - platform: template

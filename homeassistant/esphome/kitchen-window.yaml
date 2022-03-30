@@ -4,10 +4,3 @@ substitutions:
 
 packages:
   gadget: !include gadget/window-controller.yaml
-
-
-
-
-
-
-

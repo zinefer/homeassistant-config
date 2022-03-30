@@ -1,0 +1,138 @@
+substitutions:
+  id: planet-lamp
+  name: Planet Lamp
+
+packages:
+  base: !include common/base-esp8266-nodemcu.yaml
+
+esphome:
+  includes:
+    - common/hsv2rgb.h
+
+output:
+  - platform: esp8266_pwm
+    id: output_red
+    pin: GPIO4
+
+  - platform: esp8266_pwm
+    id: output_green
+    pin: GPIO12
+
+  - platform: esp8266_pwm
+    id: output_blue
+    pin: GPIO14
+
+  - platform: esp8266_pwm
+    id: output_cwhite
+    pin: GPIO5
+    max_power: 0.65
+
+  - platform: esp8266_pwm
+    id: output_wwhite
+    pin: GPIO13
+    max_power: 0.65
+
+light:
+  - platform: rgbww
+    name: ${name}
+    id: planet_light
+    red: output_red
+    green: output_green
+    blue: output_blue
+    warm_white: output_wwhite
+    cold_white: output_cwhite
+    cold_white_color_temperature: 5000 K
+    warm_white_color_temperature: 2000 K
+    effects:
+      - pulse:
+      - strobe:
+      - flicker:
+      - random:
+      - lambda:
+          name: Color Fade (0.5s)
+          update_interval: 0.25s
+          lambda: |-
+            int step = 3, trans = 250;
+            auto call = id(planet_light).turn_on();
+            hsv_to_rgb(gHue, 1.0, 1.0, call, trans);
+            gHue = (gHue + step) % 360;
+      - lambda:
+          name: Color Fade (1m)
+          update_interval: 1s
+          lambda: |-
+            int step = 6, trans = 1000;
+            auto call = id(planet_light).turn_on();
+            hsv_to_rgb(gHue, 1.0, 1.0, call, trans);
+            gHue = (gHue + step) % 360;
+      - lambda:
+          name: Color Fade (2m)
+          update_interval: 1s
+          lambda: |-
+            int step = 3, trans = 1000;
+            auto call = id(planet_light).turn_on();
+            hsv_to_rgb(gHue, 1.0, 1.0, call, trans);
+            gHue = (gHue + step) % 360;
+      - lambda:
+          name: Fast Rainbow
+          update_interval: 1s
+          lambda: |-
+            static int state = 0;
+            auto call = id(planet_light).turn_on();
+            call.set_transition_length(990);
+            if (state == 0) {
+              call.set_rgb(1.0, 0.0, 0.0);
+            } else if (state == 1) {
+              call.set_rgb(1.0, 1.0, 0.0);
+            } else if (state == 2) {
+              call.set_rgb(0.0, 1.0, 0.0);
+            } else if (state == 3) {
+              call.set_rgb(0.0, 1.0, 1.0);
+            } else if (state == 4) {
+              call.set_rgb(0.0, 0.0, 1.0);
+            } else if (state == 5) {
+              call.set_rgb(1.0, 0.0, 1.0);
+            }
+            call.set_publish(false);
+            call.set_save(false);
+            call.perform();
+            state++;
+            if (state == 6)
+              state = 0;
+      - lambda:
+          name: Slow Rainbow
+          update_interval: 16s
+          lambda: |-
+            static int state = 0;
+            auto call = id(planet_light).turn_on();
+            call.set_transition_length(15990);
+            if (state == 0) {
+              call.set_rgb(1.0, 0.0, 0.0);
+            } else if (state == 1) {
+              call.set_rgb(1.0, 0.5, 0.0);
+            } else if (state == 2) {
+              call.set_rgb(1.0, 1.0, 0.0);
+            } else if (state == 3) {
+              call.set_rgb(0.5, 1.0, 0.0);
+            } else if (state == 4) {
+              call.set_rgb(0.0, 1.0, 0.0);
+            } else if (state == 5) {
+              call.set_rgb(0.0, 1.0, 0.5);
+            } else if (state == 6) {
+              call.set_rgb(0.0, 1.0, 1.0);
+            } else if (state == 7) {
+              call.set_rgb(0.0, 0.5, 1.0);
+            } else if (state == 8) {
+              call.set_rgb(0.0, 0.0, 1.0);
+            } else if (state == 9) {
+              call.set_rgb(0.5, 0.0, 1.0);
+            } else if (state == 10) {
+              call.set_rgb(1.0, 0.0, 1.0);
+            } else if (state == 11) {
+              call.set_rgb(1.0, 0.0, 0.5);
+            }
+            call.set_publish(false);
+            call.set_save(false);
+            call.perform();
+            state++;
+            if (state == 12)
+              state = 0;
