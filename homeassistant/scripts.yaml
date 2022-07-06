@@ -75,9 +75,21 @@ play_morning_shows:
   - wait_template: "{{ is_state('media_player.portal_to_hell', 'on') }}"
     timeout: '00:00:20'
   - delay: '00:00:01'
-  - service: plex.scan_for_clients
-  - wait_template: "{{ is_state('media_player.plex_plex_for_roku_den_roku', 'idle') or is_state('media_player.plex_plex_for_roku_den_roku', 'on') }}"
-    timeout: '00:00:20'
+  - service: button.press
+    data:
+      entity_id: button.scan_clients_pintail
+  - wait_template: "{{ not is_state('media_player.plex_plex_for_roku_den_roku', 'unavailable') }}"
+    timeout: "00:00:15"
+  - if:
+    - "{{ not wait.completed }}"
+    then:
+    - service: button.press
+      target:
+        entity_id: button.scan_clients_pintail
+    - wait_template: "{{ not is_state('media_player.plex_plex_for_roku_den_roku', 'unavailable') }}"
+      timeout: "00:00:15"
+      continue_on_timeout: false
+  - delay: '00:00:01'
   - service: media_player.play_media
     data:
       entity_id: media_player.plex_plex_for_roku_den_roku
