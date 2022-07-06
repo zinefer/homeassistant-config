@@ -1,0 +1,14 @@
+- id: mailbox-monitor
+  alias: Mailbox Monitor
+  trigger:
+    platform: state
+    entity_id: binary_sensor.mailbox_sensor
+    to: 'on'
+  action:
+    service: notify.notify
+    data:
+      message: Maybe ¯\_(ツ)_/¯
+      title: You've got mail!
+
+
+    
