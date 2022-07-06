@@ -8,3 +8,18 @@
   action:
   - service: lock.unlock
     entity_id: lock.frontdoor
+
+- id: lock-indicator-light
+  alias: Lock Indicator
+  trigger:
+  - platform: state
+    entity_id: lock.frontdoor
+  action:
+  - service_template: >
+      {% if trigger.to_state.state == 'unlocked' %}
+        switch.turn_off
+      {% else %}
+        switch.turn_on
+      {% endif %}
+    target:
+      entity_id: switch.inovelli_unknown_type_ff00_id_ff0c_switch
